@@ -33,7 +33,7 @@ class TextToMp3:
     rate: str = "+0%"
     voice: str = "zh-CN-XiaoxiaoNeural"
 
-    temp_folder = 'd:/data/edge_tss/tmp'
+    temp_folder = 'd:/data/edge_tts/tmp'
 
     tag = 'txt'
     thread_count = 2
@@ -56,6 +56,9 @@ class TextToMp3:
         """
         init text
         """
+        # 创建临时文件夹
+        mkdir(self.temp_folder)
+
         split = os.path.split(self.input_txt_file)
         spl = split[1]
 
@@ -234,9 +237,17 @@ def get_doc_text(file_path):
     return text
 
 
+def mkdir(path):
+    folder = os.path.exists(path)
+    if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+        os.makedirs(path)  # makedirs 创建文件时如果路径不存在会创建这个路径
+        print(f"create new folder:{path}")
+
+
 if __name__ == '__main__':
     s = '上弦月和下弦月就是说阴历的前半个月'
     s = '12345678'
     text_arr = split_text(s, 3)
     for s in text_arr:
         print(s)
+    mkdir(r'd:/data/edge_tts/tmp')
