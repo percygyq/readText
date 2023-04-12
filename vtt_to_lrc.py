@@ -112,7 +112,8 @@ def convert_vtts_to_lyc(vtt_list: list[str], out_vtt_file):
 
                 if is_new_line:
                     if is_time:
-                        line = f'[{time_start}]'
+                        # 00:00:16.425 -> 00:16.425
+                        line = f'[{time_start[3:]}]'
                     else:
                         line += s
                 else:
@@ -175,7 +176,8 @@ def test():
 
 if __name__ == '__main__':
     pass
-    test()
+    print('00:00:16.425'[3:])
+    # test()
     # d = time_delta('00:00:00.000', '00:02:00.100')
     # s = time_add('00:03:00.100', d)
     # print(s)

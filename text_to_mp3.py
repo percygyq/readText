@@ -203,9 +203,11 @@ class TextToMp3:
             print(" 合并失败输出:out: " + r.stdout.read().decode('utf-8'))
             print(" 合并失败输出:err " + r.stderr.read().decode('utf-8'))
         else:
-            cmd = f"cd {self.temp_folder} && copy {out_mp3_file_list[0]} {self.directory}\\{self.out_mp3_file}"
+            drive, path = os.path.splitdrive(self.temp_folder)
+            cd_drive = '' if drive == '' else f'{drive} &&'
+            cmd = f"{cd_drive} cd {self.temp_folder} && copy {out_mp3_file_list[0]} {self.directory}\\{self.out_mp3_file}"
             print(f'cmd:{cmd}')
-            r = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             pass
 
         vtt_to_lrc.convert_vtts_to_lyc(vtt_list, f'{self.directory}\\{self.out_lrc_file}')
@@ -250,4 +252,4 @@ if __name__ == '__main__':
     text_arr = split_text(s, 3)
     for s in text_arr:
         print(s)
-    mkdir(r'd:/data/edge_tts/tmp')
+    # mkdir(r'd:/data/edge_tts/tmp')
